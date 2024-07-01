@@ -12,6 +12,10 @@ A module is a script that use flowintel data and send it to an other tool in a c
 
 ### Create your own module
 
+> [!TIP]
+> If you have required parameters to be filled by user:
+> `/conf/config_module.py`.
+
 You can find an example [here](https://github.com/flowintel/flowintel/blob/main/app/modules/send_to/misp_event.py)
 
 You need at least to fill those two things:

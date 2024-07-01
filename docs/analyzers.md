@@ -16,22 +16,24 @@ Array of string. Each element is a new line of `Note selected`. (see `/analyzer`
 
 ### To flowintel
 
-Dictionary 
+Dictionary with `results` as main key.
 
 ```json
 {
-    "8.8.8.8": {                    // Element queried
-        "circl_passivedns": {       // module used in the analyzer
-            "results"{              // required key
+    "results": {
+        "8.8.8.8": {                    // Element queried
+            "circl_passivedns": {       // module used in the analyzer
+                "results"{              // required key
+                    ...
+                }
+            },
+            "dns": {
                 ...
             }
         },
-        "dns": {
-            ...
-        }
-    },
     "127.0.0.1": {
-        ...
+            ...
+        }
     }
 }
 ```
