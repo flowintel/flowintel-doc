@@ -16,24 +16,6 @@ Array of string. Each element is a new line of `Note selected`. (see `/analyzer`
 
 ### To flowintel
 
-Dictionary with `results` as main key.
+Flowintel receive results from analyzer by the way of the api.
 
-```json
-{
-    "results": {
-        "8.8.8.8": {                    // Element queried
-            "circl_passivedns": {       // module used in the analyzer
-                "results"{              // required key
-                    ...
-                }
-            },
-            "dns": {
-                ...
-            }
-        },
-    "127.0.0.1": {
-            ...
-        }
-    }
-}
-```
+For more info see [here](docs/api.md#analyzer)

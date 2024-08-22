@@ -14,6 +14,7 @@
   - [Task](docs/api.md#task)
   - [Admin](docs/api.md#admin)
   - [Templating](docs/api.md#templating)
+  - [Analyzer](docs/api.md#analyzer)
   - [Importer](docs/api.md#importer)
 - [Screenshots](docs/screenshots.md "Some screenshots of the project")
 - [Contributions](docs/contributions.md "How to contribute to the project")

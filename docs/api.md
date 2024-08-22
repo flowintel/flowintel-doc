@@ -1,13 +1,19 @@
 # API
+
 Here is some example of how to use the API.
 
 ## Case
+
 > [!NOTE]
 > Full documentation `/api/case/doc`.
+
 #### Create a case
+
 <!-- tabs:start -->
+
 #### **Python**
-```Python
+
+```python
 headers = {
     "X-API-KEY": "YOUR-API-KEY-HERE",
     "Content-Type": "application/json"
@@ -23,19 +29,25 @@ print(r.text)
 ```
 
 #### **curl**
+
 ```bash
 curl -H "Content-Type: application/json"\
      -H "X-API-KEY: YOUR-API-KEY-HERE"\
      -X POST 127.0.0.1:7006/api/case/create\
      -d '{"title": "Super Case from API"}'
 ```
+
 <!-- tabs:end -->
 
 <!-- ------------------------------------------------------------- -->
+
 #### List cases
+
 <!-- tabs:start -->
+
 #### **Python**
-```Python
+
+```python
 headers = {
     "X-API-KEY": "YOUR-API-KEY-HERE"
 }
@@ -46,16 +58,22 @@ print(r.text)
 ```
 
 #### **curl**
+
 ```bash
 curl -H "X-API-KEY: YOUR-API-KEY-HERE" -X GET 127.0.0.1:7006/api/case/all
 ```
+
 <!-- tabs:end -->
 
 <!-- ------------------------------------------------------------- -->
+
 #### Search a case
+
 <!-- tabs:start -->
+
 #### **Python**
-```Python
+
+```python
 headers = {
     "X-API-KEY": "YOUR-API-KEY-HERE"
 }
@@ -69,19 +87,25 @@ print(r.text)
 ```
 
 #### **curl**
+
 ```bash
 curl -H "Content-Type: application/json"\
      -H "X-API-KEY: YOUR-API-KEY-HERE"\
      -X POST 127.0.0.1:7006/api/case/search\
      -d '{"search": "Case"}'
 ```
+
 <!-- tabs:end -->
 
 <!-- ------------------------------------------------------------- -->
+
 #### Delete a case
+
 <!-- tabs:start -->
+
 #### **Python**
-```Python
+
+```python
 headers = {
     "X-API-KEY": "YOUR-API-KEY-HERE"
 }
@@ -92,16 +116,22 @@ print(r.text)
 ```
 
 #### **curl**
+
 ```bash
 curl -H "X-API-KEY: YOUR-API-KEY-HERE" -X GET 127.0.0.1:7006/api/case/1/delete
 ```
+
 <!-- tabs:end -->
 
 <!-- ------------------------------------------------------------- -->
+
 #### Complete a case
+
 <!-- tabs:start -->
+
 #### **Python**
-```Python
+
+```python
 headers = {
     "X-API-KEY": "YOUR-API-KEY-HERE"
 }
@@ -112,22 +142,31 @@ print(r.text)
 ```
 
 #### **curl**
+
 ```bash
 curl -H "X-API-KEY: YOUR-API-KEY-HERE" -X GET 127.0.0.1:7006/api/case/1/complete
 ```
+
 <!-- tabs:end -->
 
 <!-- ***************************************************************** -->
+
 <!-- ***************************************************************** -->
+
 <!-- ***************************************************************** -->
 
 ## Task
+
 > [!NOTE]
 > Full documentation `/api/task/doc`.
+
 #### Create a Task
+
 <!-- tabs:start -->
+
 #### **Python**
-```Python
+
+```python
 headers = {
     "X-API-KEY": "YOUR-API-KEY-HERE",
     "Content-Type": "application/json"
@@ -143,19 +182,25 @@ print(r.text)
 ```
 
 #### **curl**
+
 ```bash
 curl -H "Content-Type: application/json"\
      -H "X-API-KEY: YOUR-API-KEY-HERE"\
      -X POST 127.0.0.1:7006/api/case/1/create_task\
      -d '{"title": "First task from API"}'
 ```
+
 <!-- tabs:end -->
 
 <!-- ------------------------------------------------------------- -->
+
 #### List tasks
+
 <!-- tabs:start -->
+
 #### **Python**
-```Python
+
+```python
 headers = {
     "X-API-KEY": "YOUR-API-KEY-HERE"
 }
@@ -166,16 +211,22 @@ print(r.text)
 ```
 
 #### **curl**
+
 ```bash
 curl -H "X-API-KEY: YOUR-API-KEY-HERE" -X GET 127.0.0.1:7006/api/case/1/tasks
 ```
+
 <!-- tabs:end -->
 
 <!-- ------------------------------------------------------------- -->
+
 #### Delete a task
+
 <!-- tabs:start -->
+
 #### **Python**
-```Python
+
+```python
 headers = {
     "X-API-KEY": "YOUR-API-KEY-HERE"
 }
@@ -186,16 +237,22 @@ print(r.text)
 ```
 
 #### **curl**
+
 ```bash
 curl -H "X-API-KEY: YOUR-API-KEY-HERE" -X GET 127.0.0.1:7006/api/task/1/delete
 ```
+
 <!-- tabs:end -->
 
 <!-- ------------------------------------------------------------- -->
+
 #### Complete a case
+
 <!-- tabs:start -->
+
 #### **Python**
-```Python
+
+```python
 headers = {
     "X-API-KEY": "YOUR-API-KEY-HERE"
 }
@@ -206,22 +263,31 @@ print(r.text)
 ```
 
 #### **curl**
+
 ```bash
 curl -H "X-API-KEY: YOUR-API-KEY-HERE" -X GET 127.0.0.1:7006/api/task/1/complete
 ```
+
 <!-- tabs:end -->
 
 <!-- ***************************************************************** -->
+
 <!-- ***************************************************************** -->
+
 <!-- ***************************************************************** -->
 
 ## Admin
+
 > [!NOTE]
 > Full documentation `/api/admin/doc`.
+
 #### Add user
+
 <!-- tabs:start -->
+
 #### **Python**
-```Python
+
+```python
 headers = {
     "X-API-KEY": "YOUR-API-KEY-HERE",
     "Content-Type": "application/json"
@@ -241,19 +307,25 @@ print(r.text)
 ```
 
 #### **curl**
+
 ```bash
 curl -H "Content-Type: application/json"\
      -H "X-API-KEY: YOUR-API-KEY-HERE"\
      -X POST 127.0.0.1:7006/api/admin/add_user\
      -d '{"first_name": "John", "last_name": "Doe", "email": "j.d@j.admin", "password": "Password1234", "role": 1}'
 ```
+
 <!-- tabs:end -->
 
 <!-- ------------------------------------------------------------- -->
+
 #### List roles
+
 <!-- tabs:start -->
+
 #### **Python**
-```Python
+
+```python
 headers = {
     "X-API-KEY": "YOUR-API-KEY-HERE"
 }
@@ -264,19 +336,25 @@ print(r.text)
 ```
 
 #### **curl**
+
 ```bash
 curl -H "X-API-KEY: YOUR-API-KEY-HERE" -X GET 127.0.0.1:7006/api/admin/roles
 ```
+
 <!-- tabs:end -->
 
 ## Templating
+
 > [!NOTE]
 > Full documentation `/api/template/doc`.
 
 #### Create a case
+
 <!-- tabs:start -->
+
 #### **Python**
-```Python
+
+```python
 headers = {
     "X-API-KEY": "YOUR-API-KEY-HERE",
     "Content-Type": "application/json"
@@ -292,19 +370,25 @@ print(r.text)
 ```
 
 #### **curl**
+
 ```bash
 curl -H "Content-Type: application/json"\
      -H "X-API-KEY: YOUR-API-KEY-HERE"\
      -X POST 127.0.0.1:7006/api/template/create_case\
      -d '{"title": "Super Template Case from API"}'
 ```
+
 <!-- tabs:end -->
 
 <!-- ------------------------------------------------------------- -->
+
 #### Create a case from a template
+
 <!-- tabs:start -->
+
 #### **Python**
-```Python
+
+```python
 # A template need to be created before
 
 headers = {
@@ -322,20 +406,131 @@ print(r.text)
 ```
 
 #### **curl**
+
 ```bash
 curl -H "Content-Type: application/json"\
      -H "X-API-KEY: YOUR-API-KEY-HERE"\
      -X POST 127.0.0.1:7006/api/template/create_case_from_template/1\
      -d '{"title": "Super Case from Template API"}'
 ```
+
 <!-- tabs:end -->
 
 <!-- ***************************************************************** -->
-<!-- ***************************************************************** -->
+
 <!-- ***************************************************************** -->
 
+<!-- ***************************************************************** -->
+
+## Analyzer
+
+> [!NOTE]
+> Full documentation `/api/analyzer/doc`.
+
+#### Send results to flowintel
+
+<!-- tabs:start -->
+
+#### **Python**
+<!-- tabs:start -->
+#### **misp standard**
+> [!NOTE]
+> See [pymisp](https://github.com/MISP/PyMISP) for that. And an example [here](https://github.com/MISP/misp-modules/blob/main/misp_modules/modules/expansion/circl_passivedns.py).
+
+```python
+headers = {
+    "X-API-KEY": "YOUR-API-KEY-HERE",
+    "Content-Type": "application/json",
+    "Origin": "misp-module" # Change this for a better identificaton on flowintel
+}
+
+data = {
+    "circl.lu": {
+        "circl_passivedns": {
+            "results": {
+                "Object": [
+                    {
+                       "Attribute": [
+                            {
+                                "category": 123,
+                                "disable_correlation": "true",
+                                "object_relation": "rrname",
+                                "to_ids": "false",
+                                "type": "text",
+                                "ui-priority": 1,
+                                "uuid": "91a88a8b-d216-47a0-a250-26fdf34b2c64",
+                                "value": "185.194.95.4"
+                            }
+                       ] 
+                    }
+                ]
+            }
+        }
+    }
+}
+
+url = "http://127.0.0.1:7006/api/analyzer/receive_result"
+r = requests.post(url, json={"results": json.dumps(data)}, headers=headers)
+print(r.text)
+```
+#### **misp non standard**
+> [!NOTE]
+> Results can contains a list of value instead of a dict.
+
+```python
+headers = {
+    "X-API-KEY": "YOUR-API-KEY-HERE",
+    "Content-Type": "application/json",
+    "Origin": "misp-module" # Change this for a better identificaton on flowintel
+}
+
+data = {
+    "circl.lu": {
+        "dns": {
+            "results": [
+                {
+                    "types": [
+                        "ip-src",
+                        "ip-dst"
+                    ],
+                    "values": [
+                        "185.194.93.14"
+                    ]
+                }
+            ]
+        }
+    }
+}
+
+url = "http://127.0.0.1:7006/api/analyzer/receive_result"
+r = requests.post(url, json={"results": json.dumps(data)}, headers=headers)
+print(r.text)
+```
+<!-- tabs:end -->
+
+#### **curl**
+
+```bash
+curl -H "Content-Type: application/json"\
+     -H "X-API-KEY: YOUR-API-KEY-HERE"\
+     -H "Origin: misp-module"\
+     -X POST 127.0.0.1:7006/api/analyzer/receive_result\
+     -d '{"results":"{\"circl.lu\":{\"dns\":{\"results\":[{\"types\":[\"ip-src\",\"ip-dst\"],\"values\":[\"185.194.93.14\"]}]}}}"}'
+```
+
+<!-- tabs:end -->
+
+<!-- ***************************************************************** -->
+
+<!-- ***************************************************************** -->
+
+<!-- ***************************************************************** -->
+
+
 ## Importer
+
 Json dict to import and used for this example
+
 ```python
 {
     "uuid": "be8ebf37-6a11-43d1-a4d2-cce097b2bddd",
@@ -369,9 +564,12 @@ Json dict to import and used for this example
     ]
 }
 ```
+
 <!-- tabs:start -->
+
 #### **Python**
-```Python
+
+```python
 headers = {
     "X-API-KEY": "YOUR-API-KEY-HERE",
     "Content-Type": "application/json"
@@ -385,11 +583,14 @@ print(r.text)
 ```
 
 #### **curl**
+
 Save the dict above in a file named `CaseTest.json`.
+
 ```bash
 curl -H "Content-Type: application/json"\
      -H "X-API-KEY: YOUR-API-KEY-HERE"\
      -X POST 127.0.0.1:7006/api/importer/\
      -d @CaseTest.json
 ```
+
 <!-- tabs:end -->
