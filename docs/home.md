@@ -18,7 +18,9 @@
 
 - **Flexible Data Export**: Offers modules for exporting data to platforms like [MISP](https://www.misp-project.org/), [AIL](https://www.ail-project.org/), and more.
 
-- **Accessible API**: Exposes an API for easy interaction with FlowIntel CM's functionalities.
+- **Accessible API**: Exposes an API for easy interaction with FlowIntel's functionalities.
+
+- **Advanced Analysis Modules**: Leverages MISP modules for automated enrichment, threat intelligence, and data correlation.
   
   ![task-management](images/case_example.png)
 
