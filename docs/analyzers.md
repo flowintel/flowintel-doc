@@ -4,18 +4,24 @@ An analyzer is a connected tool which will receive and send back data to flowint
 
 ![](../images/flowintel_analyzers.png)
 
-After a selection in notes, send this to an analyzer, here it's [misp-modules](https://github.com/MISP/misp-modules) that is used as analyzer. You'll be redirect to misp-modules main page with pre-filled fields. After a research, results can be send to flowintel and populate notes with them.
 
-# Format
+Actually, only [misp-modules](https://github.com/MISP/misp-modules) is integrated.
 
-### From flowintel
+## Usage step-by-step
+1. Select an input attribute
+2. Select modules to run
+3. Enter multiple entry
+4. Submit
 
-Array of string. Each element is a new line of `Note selected`. (see `/analyzer` in flowintel)
+![](../images/analyzer/selection.png)
 
-*<u>example</u>* `["8.8.8.8", "127.0.0.1",...]` or `["circl.lu", "google.com",...]`
+5. After review, put selection in the dedicated area
+6. Next
 
-### To flowintel
+![](../images/analyzer/result.png)
 
-Flowintel receive results from analyzer by the way of the api.
+7. Choose a case
+8. Edit note or create a new MISP object
+9. Submit
 
-For more info see [here](docs/api.md#analyzer)
+![](../images/analyzer/attribution.png)

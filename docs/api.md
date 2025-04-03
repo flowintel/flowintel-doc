@@ -427,99 +427,89 @@ curl -H "Content-Type: application/json"\
 > [!NOTE]
 > Full documentation `/api/analyzer/doc`.
 
-#### Send results to flowintel
+#### Send query to flowintel
 
 <!-- tabs:start -->
 
 #### **Python**
-<!-- tabs:start -->
-#### **misp standard**
-> [!NOTE]
-> See [pymisp](https://github.com/MISP/PyMISP) for that. And an example [here](https://github.com/MISP/misp-modules/blob/main/misp_modules/modules/expansion/circl_passivedns.py).
-
 ```python
 headers = {
     "X-API-KEY": "YOUR-API-KEY-HERE",
     "Content-Type": "application/json",
-    "Origin": "misp-module" # Change this for a better identificaton on flowintel
 }
 
 data = {
-    "circl.lu": {
-        "circl_passivedns": {
-            "results": {
-                "Object": [
-                    {
-                       "Attribute": [
-                            {
-                                "category": 123,
-                                "disable_correlation": "true",
-                                "object_relation": "rrname",
-                                "to_ids": "false",
-                                "type": "text",
-                                "ui-priority": 1,
-                                "uuid": "91a88a8b-d216-47a0-a250-26fdf34b2c64",
-                                "value": "185.194.95.4"
-                            }
-                       ] 
-                    }
-                ]
-            }
-        }
-    }
+    "query": ["circl.lu", "hack.lu"],
+    "input": "domain",
+    "modules": ["circl_passivedns", "dns"]
 }
 
-url = "http://127.0.0.1:7006/api/analyzer/receive_result"
-r = requests.post(url, json={"results": json.dumps(data)}, headers=headers)
+url = "http://127.0.0.1:7006/api/analyzer/misp-modules/query"
+r = requests.post(url, json=data, headers=headers)
 print(r.text)
 ```
-#### **misp non standard**
-> [!NOTE]
-> Results can contains a list of value instead of a dict.
-
-```python
-headers = {
-    "X-API-KEY": "YOUR-API-KEY-HERE",
-    "Content-Type": "application/json",
-    "Origin": "misp-module" # Change this for a better identificaton on flowintel
-}
-
-data = {
-    "circl.lu": {
-        "dns": {
-            "results": [
-                {
-                    "types": [
-                        "ip-src",
-                        "ip-dst"
-                    ],
-                    "values": [
-                        "185.194.93.14"
-                    ]
-                }
-            ]
-        }
-    }
-}
-
-url = "http://127.0.0.1:7006/api/analyzer/receive_result"
-r = requests.post(url, json={"results": json.dumps(data)}, headers=headers)
-print(r.text)
-```
-<!-- tabs:end -->
 
 #### **curl**
 
 ```bash
 curl -H "Content-Type: application/json"\
      -H "X-API-KEY: YOUR-API-KEY-HERE"\
-     -H "Origin: misp-module"\
-     -X POST 127.0.0.1:7006/api/analyzer/receive_result\
-     -d '{"results":"{\"circl.lu\":{\"dns\":{\"results\":[{\"types\":[\"ip-src\",\"ip-dst\"],\"values\":[\"185.194.93.14\"]}]}}}"}'
+     -X POST 127.0.0.1:7006/api/analyzer/misp-modules/query\
+     -d '{"query": ["circl.lu", "hack.lu"], "input": "domain", "modules": ["circl_passivedns", "dns"]}'
 ```
 
 <!-- tabs:end -->
 
+#### See the status of an analyze
+
+<!-- tabs:start -->
+
+#### **Python**
+```python
+headers = {
+    "X-API-KEY": "YOUR-API-KEY-HERE",
+    "Content-Type": "application/json",
+}
+
+url = "http://127.0.0.1:7006/api/analyzer/misp-modules/status/<session_uuid>"
+r = requests.get(url, headers=headers)
+print(r.text)
+```
+
+#### **curl**
+
+```bash
+curl -H "Content-Type: application/json"\
+     -H "X-API-KEY: YOUR-API-KEY-HERE"\
+     -X GET 127.0.0.1:7006/api/analyzer/misp-modules/status/<session_uuid>
+```
+
+<!-- tabs:end -->
+
+#### Get the result of an analyze
+<!-- tabs:start -->
+
+#### **Python**
+```python
+headers = {
+    "X-API-KEY": "YOUR-API-KEY-HERE",
+    "Content-Type": "application/json",
+}
+
+url = "http://127.0.0.1:7006/api/analyzer/misp-modules/result/<session_uuid>"
+r = requests.get(url, headers=headers)
+print(r.text)
+```
+
+#### **curl**
+
+```bash
+curl -H "Content-Type: application/json"\
+     -H "X-API-KEY: YOUR-API-KEY-HERE"\
+     -X GET 127.0.0.1:7006/api/analyzer/misp-modules/result/<session_uuid>
+```
+
+<!-- tabs:end -->
 <!-- ***************************************************************** -->
 
 <!-- ***************************************************************** -->
