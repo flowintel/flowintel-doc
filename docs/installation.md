@@ -38,7 +38,7 @@ docker run -t -i -p 7006:7006 ID_IMAGE
 There's an image already ready to use 
 
 ```bash
-docker pull ghcr.io/flowintel/flowintel-cm:latest
+docker pull ghcr.io/flowintel/flowintel:latest
 docker run -t -i -p 7006:7006 ID_IMAGE
 ```
 
