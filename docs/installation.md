@@ -29,7 +29,7 @@ After configuration you can run the installation script:
 You have also the possibility to use the docker file:
 
 ```bash
-docker build
+docker build .
 docker run -t -i -p 7006:7006 ID_IMAGE
 ```
 
