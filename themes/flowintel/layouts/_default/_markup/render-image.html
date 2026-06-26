@@ -1,0 +1,6 @@
+{{- /* Resolve root-relative paths (e.g. /images/x.png) against the site baseURL. */ -}}
+{{- $src := .Destination -}}
+{{- if hasPrefix $src "/" -}}
+  {{- $src = $src | strings.TrimPrefix "/" | relURL -}}
+{{- end -}}
+<img src="{{ $src | safeURL }}" alt="{{ .PlainText }}"{{ with .Title }} title="{{ . }}"{{ end }} loading="lazy">

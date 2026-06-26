@@ -1,0 +1,14 @@
+{{ define "main" }}
+<article class="doc-page">
+    <div class="doc-body">
+        <h1 class="doc-title">{{ .Title }}</h1>
+        {{ .Content }}
+    </div>
+    {{ with .Fragments.Headings }}
+    <nav class="doc-toc">
+        <div class="doc-toc-title">On this page</div>
+        {{ $.TableOfContents }}
+    </nav>
+    {{ end }}
+</article>
+{{ end }}

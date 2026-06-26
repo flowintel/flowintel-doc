@@ -1,0 +1,40 @@
+<aside class="sidebar">
+    <a class="sidebar-brand" href="{{ .Site.Home.RelPermalink }}">
+        <span class="sidebar-logo">
+            <img src="{{ .Site.Params.logo | relURL }}" alt="{{ .Site.Title }}" loading="lazy">
+        </span>
+    </a>
+
+    <hr class="sidebar-divider">
+
+    <nav class="sidebar-nav">
+        <ul>
+            {{ range .Site.Menus.main }}
+                {{ $active := or ($.IsMenuCurrent "main" .) ($.HasMenuCurrent "main" .) }}
+                <li class="nav-item{{ if $active }} active{{ end }}">
+                    <a class="nav-link" href="{{ .URL | relURL }}">{{ .Name }}</a>
+                    {{ with .Children }}
+                        <ul class="nav-sub">
+                            {{ range . }}
+                                <li><a class="nav-sublink" href="{{ .URL | relURL }}">{{ .Name }}</a></li>
+                            {{ end }}
+                        </ul>
+                    {{ end }}
+                </li>
+            {{ end }}
+        </ul>
+
+        {{ with .Site.Params.manuals }}
+        <hr class="sidebar-divider">
+        <p class="sidebar-section-title">Documentation</p>
+        <ul>
+            {{ range . }}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ .url }}" target="_blank" rel="noopener">{{ .name }}</a>
+                </li>
+            {{ end }}
+        </ul>
+        {{ end }}
+    </nav>
+</aside>
+<div class="sidebar-backdrop" onclick="document.body.classList.remove('sidebar-open')"></div>

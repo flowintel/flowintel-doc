@@ -1,19 +1,45 @@
 # flowintel-doc
 
-This website is build using [docsify](https://github.com/docsifyjs/docsify/), a static website generator
+Documentation website for [flowintel](https://github.com/flowintel/flowintel),
+built with [Hugo](https://gohugo.io/) and a custom theme matching the Flowintel
+application branding.
 
+The site is published to GitHub Pages at
+<https://flowintel.github.io/flowintel-doc/>.
 
+## Requirements
 
-## Installation
+- [Hugo](https://gohugo.io/installation/) `v0.155+`
+
+## Local development
+
+Run a live-reloading local server:
 
 ```bash
-npm i docsify-cli -g
+hugo server
 ```
 
-## Start
+Then open <http://localhost:1313/flowintel-doc/>.
 
-Need to run this command where index.html is located
+## Build
 
 ```bash
-docsify serve
+hugo --minify
 ```
+
+The generated site is written to `public/`.
+
+## Structure
+
+```
+content/            Markdown content
+  _index.md         Home page
+  docs/             Documentation pages
+themes/flowintel/   Custom theme (layouts, CSS, fonts)
+static/             Images and favicon (served at the site root)
+hugo.toml           Site configuration and left-sidebar navigation menu
+```
+
+Navigation is defined by the `[menu]` section in `hugo.toml`. The Documentation
+links in the sidebar and the manual buttons on the home page come from the
+`[[params.manuals]]` list in the same file.

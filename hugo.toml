@@ -1,0 +1,157 @@
+baseURL = "https://flowintel.github.io/flowintel-doc/"
+languageCode = "en-us"
+title = "flowintel"
+theme = "flowintel"
+
+enableGitInfo = false
+
+[params]
+  description = "Helps analysts organise their cases and tasks."
+  logo = "images/flowintel_2.png"
+  favicon = "favicon.ico"
+  github = "https://github.com/flowintel/flowintel/"
+  # Footer
+  footerText = "Flowintel is co-funded by [CIRCL](https://www.circl.lu/) and by the European Union under [FETTA](https://www.circl.lu/pub/press/20240131/) (Federated European Team for Threat Analysis) project."
+  footerLogo = "https://www.vulnerability-lookup.org/images/eu-funded.jpg"
+
+# Manuals maintained in the Flowintel application repository.
+# Rendered in the sidebar "Documentation" section and as buttons on the home page.
+[[params.manuals]]
+  name = "User manual"
+  url = "https://github.com/flowintel/flowintel/blob/main/doc/user-manual.md"
+  icon = "fa-solid fa-book-open"
+[[params.manuals]]
+  name = "Installation manual"
+  url = "https://github.com/flowintel/flowintel/blob/main/doc/installation-manual.md"
+  icon = "fa-solid fa-screwdriver-wrench"
+[[params.manuals]]
+  name = "Encryption guide"
+  url = "https://github.com/flowintel/flowintel/blob/main/doc/encryption-guide.md"
+  icon = "fa-solid fa-lock"
+[[params.manuals]]
+  name = "Backup and restore guide"
+  url = "https://github.com/flowintel/flowintel/blob/main/doc/backup-restore.md"
+  icon = "fa-solid fa-database"
+
+[markup]
+  [markup.goldmark.renderer]
+    unsafe = true
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 3
+
+# Left sidebar navigation (mirrors the previous docsify sidebar)
+[menu]
+  [[menu.main]]
+    identifier = "installation"
+    name = "Getting started"
+    pageRef = "/docs/installation"
+    weight = 10
+  [[menu.main]]
+    identifier = "installation-install"
+    name = "Install"
+    url = "/docs/installation/#install"
+    parent = "installation"
+    weight = 11
+  [[menu.main]]
+    identifier = "installation-run"
+    name = "Run"
+    url = "/docs/installation/#run"
+    parent = "installation"
+    weight = 12
+  [[menu.main]]
+    identifier = "installation-first-login"
+    name = "First login"
+    url = "/docs/installation/#first-login"
+    parent = "installation"
+    weight = 13
+
+  [[menu.main]]
+    identifier = "connectors"
+    name = "Connectors"
+    pageRef = "/docs/connectors"
+    weight = 20
+  [[menu.main]]
+    identifier = "connectors-modules"
+    name = "Modules"
+    url = "/docs/connectors/#modules"
+    parent = "connectors"
+    weight = 21
+
+  [[menu.main]]
+    identifier = "analyzers"
+    name = "Analysers"
+    pageRef = "/docs/analyzers"
+    weight = 30
+
+  [[menu.main]]
+    identifier = "connectors-analyzers"
+    name = "Connectors vs Analysers"
+    pageRef = "/docs/connectors-analyzers"
+    weight = 40
+
+  [[menu.main]]
+    identifier = "importer"
+    name = "Importer"
+    pageRef = "/docs/importer"
+    weight = 50
+
+  [[menu.main]]
+    identifier = "notifications"
+    name = "Notifications"
+    pageRef = "/docs/notifications"
+    weight = 60
+
+  [[menu.main]]
+    identifier = "api"
+    name = "API"
+    pageRef = "/docs/api"
+    weight = 70
+  [[menu.main]]
+    identifier = "api-case"
+    name = "Case"
+    url = "/docs/api/#case"
+    parent = "api"
+    weight = 71
+  [[menu.main]]
+    identifier = "api-task"
+    name = "Task"
+    url = "/docs/api/#task"
+    parent = "api"
+    weight = 72
+  [[menu.main]]
+    identifier = "api-admin"
+    name = "Admin"
+    url = "/docs/api/#admin"
+    parent = "api"
+    weight = 73
+  [[menu.main]]
+    identifier = "api-templating"
+    name = "Templating"
+    url = "/docs/api/#templating"
+    parent = "api"
+    weight = 74
+  [[menu.main]]
+    identifier = "api-analyzer"
+    name = "Analyser"
+    url = "/docs/api/#analyser"
+    parent = "api"
+    weight = 75
+  [[menu.main]]
+    identifier = "api-importer"
+    name = "Importer"
+    url = "/docs/api/#importer"
+    parent = "api"
+    weight = 76
+
+  [[menu.main]]
+    identifier = "screenshots"
+    name = "Screenshots"
+    pageRef = "/docs/screenshots"
+    weight = 80
+
+  [[menu.main]]
+    identifier = "contributions"
+    name = "Contributions"
+    pageRef = "/docs/contributions"
+    weight = 90

@@ -1,0 +1,12 @@
+<footer class="site-footer">
+    <div class="footer-inner">
+        <div class="footer-text">
+            {{ with .Site.Params.footerText }}{{ . | markdownify }}{{ end }}
+        </div>
+        {{ with .Site.Params.footerLogo }}
+        <div class="footer-logo">
+            <img src="{{ . }}" alt="EU funded" loading="lazy">
+        </div>
+        {{ end }}
+    </div>
+</footer>

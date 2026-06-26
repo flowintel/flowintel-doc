@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.Language.Lang }}">
+<head>
+    {{ partial "head.html" . }}
+</head>
+<body>
+    <div class="layout">
+        {{ partial "sidebar.html" . }}
+
+        <div class="main-wrap">
+            <header class="topbar">
+                <button id="sidebarToggle" class="sidebar-toggle" aria-label="Toggle navigation">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <a class="topbar-brand" href="{{ .Site.Home.RelPermalink }}"><strong>Flowintel</strong>, an open-source case management platform</a>
+                <div class="topbar-spacer"></div>
+                {{ with .Site.Params.github }}
+                <a class="topbar-link" href="{{ . }}" target="_blank" rel="noopener" title="GitHub">
+                    <i class="fa-brands fa-github"></i>
+                </a>
+                {{ end }}
+            </header>
+
+            <main class="content">
+                {{ block "main" . }}{{ end }}
+            </main>
+
+            {{ partial "footer.html" . }}
+        </div>
+    </div>
+
+    <button id="scrollToTopBtn" class="scroll-top" title="Back to top"><i class="fas fa-chevron-up"></i></button>
+
+    <script>
+        (function () {
+            var toggle = document.getElementById('sidebarToggle');
+            var body = document.body;
+            if (toggle) {
+                toggle.addEventListener('click', function () {
+                    body.classList.toggle('sidebar-open');
+                });
+            }
+            var btn = document.getElementById('scrollToTopBtn');
+            if (btn) {
+                window.addEventListener('scroll', function () {
+                    btn.style.display = window.scrollY > 200 ? 'flex' : 'none';
+                });
+                btn.addEventListener('click', function () {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            }
+        })();
+    </script>
+</body>
+</html>
