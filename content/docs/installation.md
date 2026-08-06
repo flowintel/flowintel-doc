@@ -80,3 +80,4 @@ account:
 - The [user manual](https://github.com/flowintel/flowintel/blob/main/doc/user-manual.md) explains how to configure Flowintel and handle cases day to day.
 - The [encryption guide](https://github.com/flowintel/flowintel/blob/main/doc/encryption-guide.md) shows how to protect data at rest.
 - The [backup and restore guide](https://github.com/flowintel/flowintel/blob/main/doc/backup-restore.md) explains how to back up your data and restore it.
+- The [technical specifications](https://github.com/flowintel/flowintel/blob/main/doc/technical-specifications.md) describe the architecture: the system overview, how the components work together at runtime, and the data model.
