@@ -32,6 +32,10 @@ enableGitInfo = false
   name = "Backup and restore guide"
   url = "https://github.com/flowintel/flowintel/blob/main/doc/backup-restore.md"
   icon = "fa-solid fa-database"
+[[params.manuals]]
+  name = "Technical specifications"
+  url = "https://github.com/flowintel/flowintel/blob/main/doc/technical-specifications.md"
+  icon = "fa-solid fa-diagram-project"
 
 [markup]
   [markup.goldmark.renderer]
