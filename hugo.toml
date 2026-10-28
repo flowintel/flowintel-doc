@@ -6,8 +6,8 @@ theme = "flowintel"
 enableGitInfo = false
 
 [params]
-  description = "Helps analysts organise their cases and tasks."
-  logo = "images/flowintel_2.png"
+  description = "Case management and collaborative investigations for security analysts."
+  logo = "images/flowintel.png"
   favicon = "favicon.ico"
   github = "https://github.com/flowintel/flowintel/"
   # Footer
@@ -44,118 +44,100 @@ enableGitInfo = false
     startLevel = 2
     endLevel = 3
 
-# Left sidebar navigation (mirrors the previous docsify sidebar)
+# Documentation navigation. Existing page URLs are preserved.
 [menu]
   [[menu.main]]
     identifier = "installation"
     name = "Getting started"
     pageRef = "/docs/installation"
     weight = 10
+
   [[menu.main]]
-    identifier = "installation-install"
-    name = "Install"
-    url = "/docs/installation/#install"
-    parent = "installation"
-    weight = 11
+    identifier = "cases-tasks"
+    name = "Cases and tasks"
+    pageRef = "/docs/cases-tasks"
+    weight = 20
+
   [[menu.main]]
-    identifier = "installation-run"
-    name = "Run"
-    url = "/docs/installation/#run"
-    parent = "installation"
-    weight = 12
+    identifier = "templates"
+    name = "Templates and notes"
+    pageRef = "/docs/templates"
+    weight = 30
+
   [[menu.main]]
-    identifier = "installation-first-login"
-    name = "First login"
-    url = "/docs/installation/#first-login"
-    parent = "installation"
-    weight = 13
+    identifier = "administration"
+    name = "Administration"
+    pageRef = "/docs/administration"
+    weight = 40
+
+  [[menu.main]]
+    identifier = "connectors-analyzers"
+    name = "Choose an integration"
+    pageRef = "/docs/connectors-analyzers"
+    weight = 50
 
   [[menu.main]]
     identifier = "connectors"
-    name = "Connectors"
+    name = "Connectors and MISP sync"
     pageRef = "/docs/connectors"
-    weight = 20
-  [[menu.main]]
-    identifier = "connectors-modules"
-    name = "Modules"
-    url = "/docs/connectors/#modules"
-    parent = "connectors"
-    weight = 21
+    weight = 60
 
   [[menu.main]]
     identifier = "analyzers"
     name = "Analysers"
     pageRef = "/docs/analyzers"
-    weight = 30
-
-  [[menu.main]]
-    identifier = "connectors-analyzers"
-    name = "Connectors vs Analysers"
-    pageRef = "/docs/connectors-analyzers"
-    weight = 40
+    weight = 70
 
   [[menu.main]]
     identifier = "importer"
-    name = "Importer"
+    name = "Import and export"
     pageRef = "/docs/importer"
-    weight = 50
+    weight = 80
+
+  [[menu.main]]
+    identifier = "alerts"
+    name = "Incoming alerts"
+    pageRef = "/docs/alerts"
+    weight = 90
 
   [[menu.main]]
     identifier = "notifications"
     name = "Notifications"
     pageRef = "/docs/notifications"
-    weight = 60
+    weight = 100
 
   [[menu.main]]
     identifier = "api"
-    name = "API"
+    name = "REST API"
     pageRef = "/docs/api"
-    weight = 70
+    weight = 110
+
   [[menu.main]]
-    identifier = "api-case"
-    name = "Case"
-    url = "/docs/api/#case"
-    parent = "api"
-    weight = 71
+    identifier = "deployment"
+    name = "Deployment"
+    pageRef = "/docs/deployment"
+    weight = 120
+
   [[menu.main]]
-    identifier = "api-task"
-    name = "Task"
-    url = "/docs/api/#task"
-    parent = "api"
-    weight = 72
+    identifier = "operations"
+    name = "Operations and backups"
+    pageRef = "/docs/operations"
+    weight = 130
+
   [[menu.main]]
-    identifier = "api-admin"
-    name = "Admin"
-    url = "/docs/api/#admin"
-    parent = "api"
-    weight = 73
-  [[menu.main]]
-    identifier = "api-templating"
-    name = "Templating"
-    url = "/docs/api/#templating"
-    parent = "api"
-    weight = 74
-  [[menu.main]]
-    identifier = "api-analyzer"
-    name = "Analyser"
-    url = "/docs/api/#analyser"
-    parent = "api"
-    weight = 75
-  [[menu.main]]
-    identifier = "api-importer"
-    name = "Importer"
-    url = "/docs/api/#importer"
-    parent = "api"
-    weight = 76
+    identifier = "troubleshooting"
+    name = "Troubleshooting"
+    pageRef = "/docs/troubleshooting"
+    weight = 140
 
   [[menu.main]]
     identifier = "screenshots"
     name = "Screenshots"
     pageRef = "/docs/screenshots"
-    weight = 80
+    weight = 150
 
   [[menu.main]]
     identifier = "contributions"
-    name = "Contributions"
+    name = "Contributing"
     pageRef = "/docs/contributions"
-    weight = 90
+    weight = 160

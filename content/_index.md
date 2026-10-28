@@ -1,45 +1,39 @@
 ---
-title: "flowintel"
-description: "Helps analysts organise their cases and tasks."
+title: "Flowintel documentation"
+description: "Case management and collaborative investigations for security analysts."
 ---
 
-## Features
+Flowintel is an open-source case management platform for security analysts. Organise investigations, assign work, preserve evidence and exchange threat intelligence through a shared workspace.
 
-- **Cases and tasks**: built for security analysts to track and organise their work.
+## Start with your task
 
-- **Private and privileged cases**: limit who can see a case, and enforce a four-eyes review before tasks are completed.
+| I want to… | Read |
+|---|---|
+| Try Flowintel locally | [Getting started]({{< relref "installation" >}}) |
+| Run an investigation | [Cases, tasks and evidence]({{< relref "cases-tasks" >}}) |
+| Create repeatable procedures | [Templates and notes]({{< relref "templates" >}}) |
+| Manage users and review permissions | [Administration and access]({{< relref "administration" >}}) |
+| Connect another tool | [Choose an integration]({{< relref "connectors-analyzers" >}}) |
+| Automate work | [REST API]({{< relref "api" >}}) |
+| Operate a shared instance | [Deployment]({{< relref "deployment" >}}) and [Operations]({{< relref "operations" >}}) |
 
-- **Notes**: write detailed notes in Markdown, add Mermaid diagrams, and export them to formats such as PDF.
+## What you can do
 
-- **Reports**: generate a case report in Markdown or PDF, optionally signed with a GPG key so recipients can verify it.
+- **Manage cases and tasks:** organise work by case, organisation, assignee, status and deadline, with subtasks and external references.
+- **Document evidence:** write Markdown notes, add Mermaid diagrams, attach files and generate reports.
+- **Build shared procedures:** reuse case, task and note templates, including templates from a central repository.
+- **Control access and review:** combine roles, organisation membership, private cases and privileged task approval workflows.
+- **Add intelligence context:** use MISP taxonomies, galaxies, objects and standalone attributes, then enrich evidence with MISP modules.
+- **Exchange and triage data:** send and receive through connectors, configure MISP synchronisation, import cases and review incoming alerts.
+- **Optional assistant and single sign-on:** configure the Ollama-backed assistant and supported identity providers for your deployment.
+- **Follow activity:** use assignments, calendar views, reminders, notifications, case history and audit logs.
 
-- **MISP standard**: works with [MISP taxonomies](https://github.com/MISP/misp-taxonomies) and the [MISP galaxy](https://www.misp-galaxy.org/).
+![An investigation with its tasks in Flowintel](/images/current/case-overview.jpg)
 
-- **Calendar and notifications**: a calendar view and notifications help you keep track of your tasks.
+## About these guides
 
-- **Alerting**: outbound webhooks push events, such as the creation of a case, to your own systems.
-
-- **Templates**: reusable templates for cases and tasks, so you can build a library of playbooks.
-
-- **Data export**: modules to send data to other tools, such as [MISP](https://www.misp-project.org/) and [AIL](https://www.ail-project.org/).
-
-- **API**: work with Flowintel from your own scripts.
-
-- **Analysis modules**: run MISP modules to enrich your data and pull in threat intelligence.
-
-- **Chatbot**: an optional assistant, backed by your own [Ollama](https://ollama.com/) server, that queries Flowintel through its API.
-
-- **Single sign-on**: authenticate with Keycloak or Microsoft Entra ID, and map their groups to Flowintel roles.
-
-- **Access control and audit trail**: roles and granular permissions per organisation, with a record of every action on a case.
-
-![task-management](/images/case_example.png)
+These guides describe the application source reviewed in October 2026. Available features depend on your installed version, permissions and configuration. The detailed manuals linked in the sidebar provide further deployment and product reference; your instance's `/api/` page describes its API.
 
 ## Licence
 
-This software is licensed under the [GNU Affero General Public License version 3](http://www.gnu.org/licenses/agpl-3.0.html).
-
-```
-Copyright (C) 2022-2023 CIRCL - Computer Incident Response Center Luxembourg
-Copyright (C) 2022-2023 David Cruciani
-```
+Flowintel is licensed under the [GNU Affero General Public License version 3](https://www.gnu.org/licenses/agpl-3.0.html).

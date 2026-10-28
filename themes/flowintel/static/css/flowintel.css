@@ -79,15 +79,14 @@ img { max-width: 100%; height: auto; }
 .sidebar-brand {
   display: flex;
   justify-content: center;
-  padding: 1rem 0.75rem 0.5rem;
 }
-.sidebar-logo {
-  background-color: #fff;
-  padding: 4px 26px;
-  border-radius: 30px;
-  display: inline-flex;
+
+.sidebar-logo img { 
+  height: 70px; 
+  width: auto; 
+  filter: brightness(1.2);
+  margin-top: 3px;
 }
-.sidebar-logo img { height: 50px; width: auto; }
 
 .sidebar-divider {
   border: 0;

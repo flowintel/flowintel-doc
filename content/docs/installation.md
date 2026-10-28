@@ -1,46 +1,45 @@
 ---
 title: "Getting started"
-weight: 10
 ---
 
-This quick start runs Flowintel in **development mode** (an SQLite database, with
-sample cases). For a production setup with PostgreSQL, NGINX, HTTPS and systemd
-services, follow the full
-[installation manual](https://github.com/flowintel/flowintel/blob/main/doc/installation-manual.md).
+Use this guide for a local evaluation. For a shared installation, continue with [Deployment and configuration]({{< relref "deployment" >}}). Commands below run from the **Flowintel application repository**, not the documentation repository.
+
+## Requirements
+
+- Git and a Linux environment supported by the installation scripts (`apt` or `dnf`), with permission to install system packages.
+- Python compatible with the application checkout. The current `pyproject.toml` declares Python **3.10 to 3.13**; Python 3.12 is a suitable starting point.
+- Valkey or Redis for sessions, plus SQLite for local evaluation or PostgreSQL/MySQL/MariaDB for a configured database deployment.
+- Bun for frontend dependencies and the Vite asset build. Document exports also use Pandoc, LaTeX and Mermaid tools.
+
+The installer changes system packages and installs tools in your home directory. Review it before running it. Package availability depends on your distribution.
 
 ## Install
-
-Clone the repository:
 
 ```bash
 git clone https://github.com/flowintel/flowintel.git
 cd flowintel
-```
-
-### Configuration
-
-Copy the default configuration files and adjust them to your environment:
-
-```bash
 cp conf/config.py.default conf/config.py
 cp conf/config_module.py.default conf/config_module.py
 ```
 
-The main settings live in `conf/config.py`. If you plan to use modules, such as
-connectors, analysers or notifications, review `conf/config_module.py` as well.
-
-### Run the installation script
-
-The script creates a Python virtual environment, installs the dependencies, sets
-up the database and loads the sample data:
+Review both configuration files. Set a unique `SECRET_KEY` in your runtime environment and configure Valkey connectivity. The supplied configuration reads environment variables; keep local settings and credentials out of version control.
 
 ```bash
 bash install.safe.sh
 ```
 
-It takes around 10 to 15 minutes and asks for your `sudo` password along the way.
-For a production install on PostgreSQL, run `bash install.safe.sh --production`
-after setting up the database as described in the installation manual.
+The default mode creates `env/`, installs dependencies, initialises submodules and the development database, loads taxonomies and galaxies, registers analysis modules, and adds sample cases. Check the output for failures: some setup steps report warnings without stopping the installer.
+
+The safe installer does not build the frontend assets. With Bun installed, build them separately:
+
+```bash
+cd app/assets
+bun install
+bun run build:static
+cd ../..
+```
+
+The repository also contains `install.sh`, which uses uv and Bun. These are alternative bootstrap scripts; do not run both as successive installation steps.
 
 ## Run
 
@@ -48,36 +47,42 @@ after setting up the database as described in the installation manual.
 bash launch.sh -l
 ```
 
-Flowintel listens on `http://127.0.0.1:7006` by default. Press `Ctrl+C` to stop it.
-
-## Run with Docker
-
-You can also start Flowintel together with its dependencies (PostgreSQL and
-Valkey) using Docker Compose:
-
-```bash
-docker compose up -d
-```
-
-This pulls the published `ghcr.io/flowintel/flowintel:latest` image and serves
-Flowintel on port `7006`.
+Open `http://127.0.0.1:7006` unless you changed the host or port. This launches development mode and background workers. Use `Ctrl+C` to stop the foreground process; `bash launch.sh -ks` stops the launcher's managed background sessions.
 
 ## First login
 
-Open Flowintel in your browser and sign in with the default administrator
-account:
+If you kept the initial account defaults, sign in with:
 
-- **Email**: `admin@admin.admin`
-- **Password**: `admin`
+- Email: `admin@admin.admin`
+- Password: `admin`
 
-> [!WARNING]
-> Change the administrator password straight after the first login, from your
-> user profile.
+If you supplied `ADMIN_MAIL` and `ADMIN_PASSWORD` before database initialisation, use those credentials instead. Change default credentials before allowing other people to reach the service.
+
+Create your organisations and users, review their permissions, then follow [Your first investigation]({{< relref "cases-tasks" >}}). The sample cases are for exploration; use a separate deployment for operational data.
+
+## Run with Docker
+
+The Compose files live under `docker/`. Configuration files must exist because Compose mounts them into the container. After cloning and copying the configuration files as above:
+
+```bash
+cp template.env .env
+```
+
+Edit `.env`: replace placeholder secrets, set initial administrator credentials, and use `DB_HOST=postgresql` and `VALKEY_IP=valkey` for the bundled services. Then inspect and start the published-image stack:
+
+```bash
+docker compose --env-file .env -f docker/docker-compose.yml config --quiet
+docker compose --env-file .env -f docker/docker-compose.yml up -d
+docker compose --env-file .env -f docker/docker-compose.yml logs -f flowintel
+```
+
+This stack includes PostgreSQL, Valkey and `ghcr.io/flowintel/flowintel:latest`. The default host binding is loopback on port 7006. For deployment variants and persistent data, see [Deployment]({{< relref "deployment" >}}).
 
 ## Next steps
 
-- The [installation manual](https://github.com/flowintel/flowintel/blob/main/doc/installation-manual.md) covers production setups, single sign-on, MISP and report signing.
-- The [user manual](https://github.com/flowintel/flowintel/blob/main/doc/user-manual.md) explains how to configure Flowintel and handle cases day to day.
-- The [encryption guide](https://github.com/flowintel/flowintel/blob/main/doc/encryption-guide.md) shows how to protect data at rest.
-- The [backup and restore guide](https://github.com/flowintel/flowintel/blob/main/doc/backup-restore.md) explains how to back up your data and restore it.
-- The [technical specifications](https://github.com/flowintel/flowintel/blob/main/doc/technical-specifications.md) describe the architecture: the system overview, how the components work together at runtime, and the data model.
+- [Cases, tasks and evidence]({{< relref "cases-tasks" >}}): work through an investigation.
+- [Templates and notes]({{< relref "templates" >}}): standardise repeatable work.
+- [Administration]({{< relref "administration" >}}): configure access and review workflows.
+- [Troubleshooting]({{< relref "troubleshooting" >}}): diagnose setup and integration problems.
+
+For architecture and data-model details, see the [technical specifications](https://github.com/flowintel/flowintel/blob/main/doc/technical-specifications.md).

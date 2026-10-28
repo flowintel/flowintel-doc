@@ -1,589 +1,129 @@
 ---
-title: "API"
-weight: 70
+title: "REST API"
 ---
 
-Here are some examples of how to use the API.
+The API supports case management, templates, integrations and administration. Open **`/api/` on your Flowintel instance** for the combined Swagger interface. The OpenAPI document is available at `/api/swagger.json`. Older per-service `/api/case/doc`-style links are not the current documentation entry point.
+
+## Authentication
+
+Most endpoints require a user's API key in the `X-API-KEY` header. The key acts with that user's role, specialised permissions and case access. Obtain your key from your account settings and keep it out of source code and logs.
+
+The examples below assume these shell variables are set:
+
+```bash
+export FLOWINTEL_URL='http://127.0.0.1:7006'
+# Set FLOWINTEL_API_KEY to your user API key in your local environment.
+```
+
+Use the HTTPS address of your deployment for remote requests. Alert ingestion is an exception: it authenticates with a connector key, described under [Incoming alerts]({{< relref "alerts" >}}).
 
 ## Case
 
-> [!NOTE]
-> Full documentation `/api/case/doc`.
-
-#### Create a case
-
-<!-- tabs:start -->
-
-#### **Python**
-
-```python
-headers = {
-    "X-API-KEY": "YOUR-API-KEY-HERE",
-    "Content-Type": "application/json"
-}
-
-data = {
-    "title": "Super Case from API"
-}
-
-url = "http://127.0.0.1:7006/api/case/create"
-r = requests.post(url, json=data, headers=headers)
-print(r.text)
-```
-
-#### **curl**
+Create a case:
 
 ```bash
-curl -H "Content-Type: application/json"\
-     -H "X-API-KEY: YOUR-API-KEY-HERE"\
-     -X POST 127.0.0.1:7006/api/case/create\
-     -d '{"title": "Super Case from API"}'
+curl --fail-with-body \
+  -H "X-API-KEY: $FLOWINTEL_API_KEY" \
+  -H 'Content-Type: application/json' \
+  --data '{"title":"Domain investigation","description":"Triage the report"}' \
+  "$FLOWINTEL_URL/api/case/create"
 ```
 
-<!-- tabs:end -->
+A successful creation returns HTTP 201 with a `case_id`. Use that value for subsequent requests.
 
-<!-- ------------------------------------------------------------- -->
+| Method | Path | Purpose |
+|---|---|---|
+| GET | `/api/case/all` | List cases available to the caller. |
+| GET | `/api/case/{case_id}` | Retrieve a case. |
+| POST | `/api/case/create` | Create a case. |
+| POST | `/api/case/{case_id}/edit` | Update case fields. |
+| GET | `/api/case/{case_id}/tasks` | List tasks in a case. |
+| GET | `/api/case/{case_id}/history` | Read case history. |
 
-#### List cases
-
-<!-- tabs:start -->
-
-#### **Python**
-
-```python
-headers = {
-    "X-API-KEY": "YOUR-API-KEY-HERE"
-}
-
-url = "http://127.0.0.1:7006/api/case/all"
-r = requests.get(url, headers=headers)
-print(r.text)
-```
-
-#### **curl**
-
-```bash
-curl -H "X-API-KEY: YOUR-API-KEY-HERE" -X GET 127.0.0.1:7006/api/case/all
-```
-
-<!-- tabs:end -->
-
-<!-- ------------------------------------------------------------- -->
-
-#### Search a case
-
-<!-- tabs:start -->
-
-#### **Python**
-
-```python
-headers = {
-    "X-API-KEY": "YOUR-API-KEY-HERE"
-}
-data = {
-    "search": "Case"
-}
-
-url = "http://127.0.0.1:7006/api/case/search"
-r = requests.post(url, json=data, headers=headers)
-print(r.text)
-```
-
-#### **curl**
-
-```bash
-curl -H "Content-Type: application/json"\
-     -H "X-API-KEY: YOUR-API-KEY-HERE"\
-     -X POST 127.0.0.1:7006/api/case/search\
-     -d '{"search": "Case"}'
-```
-
-<!-- tabs:end -->
-
-<!-- ------------------------------------------------------------- -->
-
-#### Delete a case
-
-<!-- tabs:start -->
-
-#### **Python**
-
-```python
-headers = {
-    "X-API-KEY": "YOUR-API-KEY-HERE"
-}
-
-url = "http://127.0.0.1:7006/api/case/1/delete"
-r = requests.get(url, headers=headers)
-print(r.text)
-```
-
-#### **curl**
-
-```bash
-curl -H "X-API-KEY: YOUR-API-KEY-HERE" -X GET 127.0.0.1:7006/api/case/1/delete
-```
-
-<!-- tabs:end -->
-
-<!-- ------------------------------------------------------------- -->
-
-#### Complete a case
-
-<!-- tabs:start -->
-
-#### **Python**
-
-```python
-headers = {
-    "X-API-KEY": "YOUR-API-KEY-HERE"
-}
-
-url = "http://127.0.0.1:7006/api/case/1/complete"
-r = requests.get(url, headers=headers)
-print(r.text)
-```
-
-#### **curl**
-
-```bash
-curl -H "X-API-KEY: YOUR-API-KEY-HERE" -X GET 127.0.0.1:7006/api/case/1/complete
-```
-
-<!-- tabs:end -->
-
-<!-- ***************************************************************** -->
-
-<!-- ***************************************************************** -->
-
-<!-- ***************************************************************** -->
+Creation supports contextual tags, clusters, custom tags, deadlines, `is_private` and `privileged_case`. Setting the privileged flag requires the corresponding administrative permission. Consult Swagger for field details and the endpoints available in your deployed version.
 
 ## Task
 
-> [!NOTE]
-> Full documentation `/api/task/doc`.
-
-#### Create a task
-
-<!-- tabs:start -->
-
-#### **Python**
-
-```python
-headers = {
-    "X-API-KEY": "YOUR-API-KEY-HERE",
-    "Content-Type": "application/json"
-}
-
-data = {
-    "title": "First task from API"
-}
-
-url = "http://127.0.0.1:7006/api/case/1/create_task"
-r = requests.post(url, json=data, headers=headers)
-print(r.text)
-```
-
-#### **curl**
+Replace `123` with the returned case ID:
 
 ```bash
-curl -H "Content-Type: application/json"\
-     -H "X-API-KEY: YOUR-API-KEY-HERE"\
-     -X POST 127.0.0.1:7006/api/case/1/create_task\
-     -d '{"title": "First task from API"}'
+curl --fail-with-body \
+  -H "X-API-KEY: $FLOWINTEL_API_KEY" \
+  -H 'Content-Type: application/json' \
+  --data '{"title":"Triage the report","description":"Record the evidence"}' \
+  "$FLOWINTEL_URL/api/case/123/create_task"
 ```
 
-<!-- tabs:end -->
+Success returns HTTP 201 and a `task_id`. Task creation is under the **case** namespace; subsequent operations use `/api/task/{task_id}` and its subroutes for notes, assignment, files, subtasks and status changes.
 
-<!-- ------------------------------------------------------------- -->
+Use `/api/task/list_status` to discover task statuses rather than hard-coding IDs from another instance. Privileged-case review rules also apply to API operations.
 
-#### List tasks
+## Python example
 
-<!-- tabs:start -->
-
-#### **Python**
+This example creates a case and then a task, checks HTTP errors and uses bounded request timeouts. It requires the `requests` package.
 
 ```python
-headers = {
-    "X-API-KEY": "YOUR-API-KEY-HERE"
-}
+import os
+import requests
 
-url = "http://127.0.0.1:7006/api/case/1/tasks"
-r = requests.get(url, headers=headers)
-print(r.text)
+base = os.environ["FLOWINTEL_URL"].rstrip("/")
+with requests.Session() as session:
+    session.headers["X-API-KEY"] = os.environ["FLOWINTEL_API_KEY"]
+    response = session.post(
+        f"{base}/api/case/create",
+        json={"title": "Domain investigation from Python"},
+        timeout=30,
+    )
+    response.raise_for_status()
+    case_id = response.json()["case_id"]
+
+    response = session.post(
+        f"{base}/api/case/{case_id}/create_task",
+        json={"title": "Review the evidence"},
+        timeout=30,
+    )
+    response.raise_for_status()
+    print(response.json())
 ```
 
-#### **curl**
-
-```bash
-curl -H "X-API-KEY: YOUR-API-KEY-HERE" -X GET 127.0.0.1:7006/api/case/1/tasks
-```
-
-<!-- tabs:end -->
-
-<!-- ------------------------------------------------------------- -->
-
-#### Delete a task
-
-<!-- tabs:start -->
-
-#### **Python**
-
-```python
-headers = {
-    "X-API-KEY": "YOUR-API-KEY-HERE"
-}
-
-url = "http://127.0.0.1:7006/api/task/1/delete"
-r = requests.get(url, headers=headers)
-print(r.text)
-```
-
-#### **curl**
-
-```bash
-curl -H "X-API-KEY: YOUR-API-KEY-HERE" -X GET 127.0.0.1:7006/api/task/1/delete
-```
-
-<!-- tabs:end -->
-
-<!-- ------------------------------------------------------------- -->
-
-#### Complete a task
-
-<!-- tabs:start -->
-
-#### **Python**
-
-```python
-headers = {
-    "X-API-KEY": "YOUR-API-KEY-HERE"
-}
-
-url = "http://127.0.0.1:7006/api/task/1/complete"
-r = requests.get(url, headers=headers)
-print(r.text)
-```
-
-#### **curl**
-
-```bash
-curl -H "X-API-KEY: YOUR-API-KEY-HERE" -X GET 127.0.0.1:7006/api/task/1/complete
-```
-
-<!-- tabs:end -->
-
-<!-- ***************************************************************** -->
-
-<!-- ***************************************************************** -->
-
-<!-- ***************************************************************** -->
+Choose a unique title when rerunning the example. If a write times out, check whether it succeeded before retrying; creating a case and creating its task are separate operations.
 
 ## Admin
 
-> [!NOTE]
-> Full documentation `/api/admin/doc`.
-
-#### Add user
-
-<!-- tabs:start -->
-
-#### **Python**
-
-```python
-headers = {
-    "X-API-KEY": "YOUR-API-KEY-HERE",
-    "Content-Type": "application/json"
-}
-
-data = {
-    "first_name": "John",
-    "last_name": "Doe",
-    "email": "j.d@j.admin",
-    "password": "Password1234",
-    "role": 1
-}
-
-url = "http://127.0.0.1:7006/api/admin/add_user"
-r = requests.post(url, json=data, headers=headers)
-print(r.text)
-```
-
-#### **curl**
-
-```bash
-curl -H "Content-Type: application/json"\
-     -H "X-API-KEY: YOUR-API-KEY-HERE"\
-     -X POST 127.0.0.1:7006/api/admin/add_user\
-     -d '{"first_name": "John", "last_name": "Doe", "email": "j.d@j.admin", "password": "Password1234", "role": 1}'
-```
-
-<!-- tabs:end -->
-
-<!-- ------------------------------------------------------------- -->
-
-#### List roles
-
-<!-- tabs:start -->
-
-#### **Python**
-
-```python
-headers = {
-    "X-API-KEY": "YOUR-API-KEY-HERE"
-}
-
-url = "http://127.0.0.1:7006/api/admin/roles"
-r = requests.get(url, headers=headers)
-print(r.text)
-```
-
-#### **curl**
-
-```bash
-curl -H "X-API-KEY: YOUR-API-KEY-HERE" -X GET 127.0.0.1:7006/api/admin/roles
-```
-
-<!-- tabs:end -->
+`/api/admin` exposes user, organisation and role management. Examples include `GET /api/admin/users`, `GET /api/admin/orgs` and `GET /api/admin/roles`. Permissions vary by operation; user management also checks organisation-administrator scope where supported.
 
 ## Templating
 
-> [!NOTE]
-> Full documentation `/api/template/doc`.
-
-#### Create a case
-
-<!-- tabs:start -->
-
-#### **Python**
-
-```python
-headers = {
-    "X-API-KEY": "YOUR-API-KEY-HERE",
-    "Content-Type": "application/json"
-}
-
-data = {
-    "title": "Super Template Case from API"
-}
-
-url = "http://127.0.0.1:7006/api/template/create_case"
-r = requests.post(url, json=data, headers=headers)
-print(r.text)
-```
-
-#### **curl**
-
-```bash
-curl -H "Content-Type: application/json"\
-     -H "X-API-KEY: YOUR-API-KEY-HERE"\
-     -X POST 127.0.0.1:7006/api/template/create_case\
-     -d '{"title": "Super Template Case from API"}'
-```
-
-<!-- tabs:end -->
-
-<!-- ------------------------------------------------------------- -->
-
-#### Create a case from a template
-
-<!-- tabs:start -->
-
-#### **Python**
-
-```python
-# A template need to be created before
-
-headers = {
-    "X-API-KEY": "YOUR-API-KEY-HERE",
-    "Content-Type": "application/json"
-}
-
-data = {
-    "title": "Super Case from Template API"
-}
-
-url = "http://127.0.0.1:7006/api/template/create_case_from_template/1"
-r = requests.post(url, json=data, headers=headers)
-print(r.text)
-```
-
-#### **curl**
-
-```bash
-curl -H "Content-Type: application/json"\
-     -H "X-API-KEY: YOUR-API-KEY-HERE"\
-     -X POST 127.0.0.1:7006/api/template/create_case_from_template/1\
-     -d '{"title": "Super Case from Template API"}'
-```
-
-<!-- tabs:end -->
-
-<!-- ***************************************************************** -->
-
-<!-- ***************************************************************** -->
-
-<!-- ***************************************************************** -->
+`/api/templating` manages case and task templates, their context and reusable work items. Template maintenance requires Template Editor permission or administrator access. For exchanging exported templates, use `POST /api/importer/template`.
 
 ## Analyser
 
-> [!NOTE]
-> Full documentation `/api/analyzer/doc`.
+Start a session with `POST /api/analyzer/misp-modules/query` using a JSON body containing:
 
-#### Send a query to Flowintel
+- `query`: list of values to analyse.
+- `input`: one MISP attribute type.
+- `modules`: list of module names compatible with that input.
 
-<!-- tabs:start -->
-
-#### **Python**
-```python
-headers = {
-    "X-API-KEY": "YOUR-API-KEY-HERE",
-    "Content-Type": "application/json",
-}
-
-data = {
-    "query": ["circl.lu", "hack.lu"],
-    "input": "domain",
-    "modules": ["circl_passivedns", "dns"]
-}
-
-url = "http://127.0.0.1:7006/api/analyzer/misp-modules/query"
-r = requests.post(url, json=data, headers=headers)
-print(r.text)
-```
-
-#### **curl**
-
-```bash
-curl -H "Content-Type: application/json"\
-     -H "X-API-KEY: YOUR-API-KEY-HERE"\
-     -X POST 127.0.0.1:7006/api/analyzer/misp-modules/query\
-     -d '{"query": ["circl.lu", "hack.lu"], "input": "domain", "modules": ["circl_passivedns", "dns"]}'
-```
-
-<!-- tabs:end -->
-
-#### Check the status of an analysis
-
-<!-- tabs:start -->
-
-#### **Python**
-```python
-headers = {
-    "X-API-KEY": "YOUR-API-KEY-HERE",
-    "Content-Type": "application/json",
-}
-
-url = "http://127.0.0.1:7006/api/analyzer/misp-modules/status/<session_uuid>"
-r = requests.get(url, headers=headers)
-print(r.text)
-```
-
-#### **curl**
-
-```bash
-curl -H "Content-Type: application/json"\
-     -H "X-API-KEY: YOUR-API-KEY-HERE"\
-     -X GET 127.0.0.1:7006/api/analyzer/misp-modules/status/<session_uuid>
-```
-
-<!-- tabs:end -->
-
-#### Get the result of an analysis
-<!-- tabs:start -->
-
-#### **Python**
-```python
-headers = {
-    "X-API-KEY": "YOUR-API-KEY-HERE",
-    "Content-Type": "application/json",
-}
-
-url = "http://127.0.0.1:7006/api/analyzer/misp-modules/result/<session_uuid>"
-r = requests.get(url, headers=headers)
-print(r.text)
-```
-
-#### **curl**
-
-```bash
-curl -H "Content-Type: application/json"\
-     -H "X-API-KEY: YOUR-API-KEY-HERE"\
-     -X GET 127.0.0.1:7006/api/analyzer/misp-modules/result/<session_uuid>
-```
-
-<!-- tabs:end -->
-<!-- ***************************************************************** -->
-
-<!-- ***************************************************************** -->
-
-<!-- ***************************************************************** -->
-
+Use the returned session identifier with `GET /api/analyzer/misp-modules/status/{session_id}` and then `GET /api/analyzer/misp-modules/result/{session_id}`. Module execution is asynchronous; inspect status and result messages rather than treating the initial response as the final analysis.
 
 ## Importer
 
-The JSON used in this example:
+`POST /api/importer/case` accepts Flowintel case JSON; `POST /api/importer/template` accepts template JSON. See [Import and export]({{< relref "importer" >}}) before constructing payloads. `POST /api/case_from_misp/` creates a case from a configured MISP instance/event and template.
 
-```python
-{
-    "uuid": "be8ebf37-6a11-43d1-a4d2-cce097b2bddd",
-    "title": "Case test",
-    "description": "My super case for the documentation",
-    "recurring_type": None,
-    "notes": "This case is just boring...\nYes it is !",
-    "deadline": None,
-    "recurring_date": None,
-    "tags": [],
-    "clusters": [],
-    "tasks": [
-        {
-            "uuid": "5a1f4902-9d54-476f-a4f8-2a93cbe20597",
-            "title": "Prepare a super tea",
-            "description": "Keep it as hot as possible",
-            "url": "",
-            "notes": [
-                {
-                    "uuid": "864fa9c7-b4d6-4e9b-80e7-0cc07c894e60",
-                    "note": "# Preparation\n- add one sugar\n",
-                    "task_uuid": "5a1f4902-9d54-476f-a4f8-2a93cbe20597"
-                }
-            ],
-            "deadline": None,
-            "tags": [
-                "PAP:RED"
-            ],
-            "clusters": []
-        }
-    ]
-}
-```
+## Other services
 
-<!-- tabs:start -->
+| Prefix | Purpose |
+|---|---|
+| `/api/connectors` | Connector and instance management |
+| `/api/custom_tags` | Local tags |
+| `/api/my_assignment` | Assigned work |
+| `/api/calendar` | Calendar operations |
+| `/api/alerts` | Incoming alert schema and ingestion |
 
-#### **Python**
+MISP sync settings and conflict resolution are exposed under `/api/case/{case_id}/connectors/{link_id}/…`. The settings response lists supported intervals, conflict strategies and resolutions.
 
-```python
-headers = {
-    "X-API-KEY": "YOUR-API-KEY-HERE",
-    "Content-Type": "application/json"
-}
+## Errors and automation
 
-data = ... # Use the dict above.
+Read both the HTTP status and response body. Typical outcomes include 400 for invalid input, 403 for authentication/permission failures, and 404 for unavailable resources. Some legacy operations report errors in a JSON `message` even when the HTTP response is successful, particularly imports; validate the operation's result too.
 
-url = "http://127.0.0.1:7006/api/importer/"
-r = requests.post(url, json=data, headers=headers)
-print(r.text)
-```
-
-#### **curl**
-
-Save the dict above in a file named `CaseTest.json`.
-
-```bash
-curl -H "Content-Type: application/json"\
-     -H "X-API-KEY: YOUR-API-KEY-HERE"\
-     -X POST 127.0.0.1:7006/api/importer/\
-     -d @CaseTest.json
-```
-
-<!-- tabs:end -->
+Some existing routes mutate data through GET requests. Check the documented method and operation before calling a route; do not indiscriminately crawl authenticated API URLs. Limit retries of writes and verify the existing state after a timeout.

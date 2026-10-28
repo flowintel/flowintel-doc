@@ -1,25 +1,36 @@
 ---
-title: "Notifications"
-weight: 60
+title: "Notifications and reminders"
 ---
 
-Each time you click the bell on a task to notify a user, a notification is sent.
+Notifications help you follow assignments, task activity, review requests and recurring reminders. Open the bell icon or notifications page to inspect them, filter by category/type and read state, and mark entries as read or unread.
 
-Recurring cases are handled by a background screen. Every day at 2am, the script
-creates a notification for each recurring case, for all the users involved.
+## Task and case activity
 
-## Screen
+Use a task's notification action when you need to draw someone's attention to it. Privileged-case workflows also notify approvers and requesters as work moves through review. Notifications do not grant access to a case: normal case and organisation permissions still apply.
 
-To open the screen, for example to debug it:
+## Recurring reminders
+
+Configure a case's recurrence type and date to request a one-time, daily, weekly or monthly reminder. The recurring job considers active, incomplete cases and advances the next reminder date where appropriate.
+
+In the current source, `app/bin/recurring_notification.py` schedules this job for **03:00 each day in the server's local timezone**. Keep the worker running at that time; the schedule is not based on each browser's timezone.
+
+For launcher-based deployments, inspect the worker with:
 
 ```bash
+screen -ls
 screen -r fcm
 ```
 
-## Modules
+Detach from a screen session with `Ctrl+A`, then `D`. Worker output is also written to `logs/fcm.log`. For independently managed services, inspect your supervisor's logs instead.
 
-You can notify users through modules, such as email or Matrix. Here is an
-[example](https://github.com/flowintel/flowintel/blob/main/app/modules/notify_user/email.py).
+## External delivery
 
-If your own module needs parameters, set them in
-[config_module.py](https://github.com/flowintel/flowintel/blob/main/conf/config_module.py).
+Email, Matrix and webhook modules can deliver notifications outside the application. Administrators configure delivery settings using system settings and module configuration as appropriate for the deployment.
+
+The default module configuration includes SMTP host/port, sender credentials, Matrix server/user/room, and webhook URL/enabled/secret settings. The SMTP password setting is currently spelled `SENDER_PASSOWRD` in `conf/config_module.py.default`; use the exact configuration name expected by the application.
+
+Optional IMAP settings support archiving sent email notifications. Test delivery with non-sensitive content before relying on it for operational alerts.
+
+## Incoming alerts are a separate workflow
+
+Outbound notifications tell people about activity in Flowintel. [Incoming alerts]({{< relref "alerts" >}}) accept MISP event payloads from external tools for review and possible case creation.
